@@ -10,5 +10,3 @@ if len(sys.argv) > 1:
 else:
     print("Please write number of days in the past to start searching for!")
     exit()
-    
-
