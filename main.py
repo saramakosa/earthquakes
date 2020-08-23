@@ -1,8 +1,14 @@
-from earthquakes import get_earthquake
+from earthquakes_package import earthquakes
+import sys
 
-days = 2
-mag, place = get_earthquake(days)
+if len(sys.argv) > 1:
+    days = int(sys.argv[1])
+    mag, place = earthquakes.get_earthquake(days)
+    print('The largest earthquake of last {} days had magnitude {} '
+          'and was located at {}'.format(days, mag, place))
 
-print("The largest earthquake of last {} days had magnitude {} \
-      and was located at {}".format(days, mag, place))
+else:
+    print("Please write number of days in the past to start searching for!")
+    exit()
+    
 
