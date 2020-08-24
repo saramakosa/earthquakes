@@ -1,8 +1,9 @@
 from earthquakes_package import earthquakes
-from earthquakes_package.scripts import dbmanager 
+from earthquakes_package.scripts import dbmanager
 import argparse
 
 db_abs_path = 'earthquakes_package/scripts/database.db'
+
 
 def parse_arguments():
     """Parse the arguments with argparse.
@@ -37,8 +38,8 @@ if __name__ == "__main__":
         print('Checking user credentials ...')
     if not dbmanager.is_allowed(args.username, args.password):
         print("Invalid credentials")
-        exit()    
-        
+        exit()
+
     days = int(args.days)  # string is not allowed
     if args.alertlevel and args.v:
         level_info = earthquakes.get_alert_info(args.alertlevel)

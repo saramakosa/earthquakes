@@ -86,6 +86,7 @@ def get_users():
         return users
     return False
 
+
 def is_allowed(u, p):
     """Check if a user is allowed tu perform the action
 
