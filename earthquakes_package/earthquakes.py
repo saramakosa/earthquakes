@@ -7,7 +7,7 @@ query_url = 'starttime={}&format=geojson&limit=20000&'
 USGS_URL = base_url + query_url
 
 
-def get_earthquake(days_past, alertlevel):
+def get_earthquake(days_past, alertlevel, verbosity):
     """Return the magnitude and the place of the earthquake with the highest
     magnitude given a starting time.
 
@@ -23,11 +23,17 @@ def get_earthquake(days_past, alertlevel):
     # add the parameter alertlevel only if specified by the user
     if alertlevel:
         URL = URL + '&alertlevel=' + alertlevel
+    if verbosity:
+        print('I am now starting to search for earthquakes with the following '
+              'parameters: \ndays_past = {}\nalertlevel = {}'.format(days_past,
+                                        alertlevel))
     r = requests.get(URL)
     events = json.loads(requests.get(URL).text)
     magnitude = 0
     place = ''
     # find the earthquake with the highest magnitude among the received results
+    if verbosity:
+        print('Search completed')
     if len(events['features']) == 0:
         return False
     else:

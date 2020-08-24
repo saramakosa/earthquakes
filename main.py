@@ -13,6 +13,8 @@ def parse_arguments():
     parser.add_argument("-alertlevel", choices=alert_levels, default=None,
                         help='''PAGER fatality and economic loss 
                         impact estimates''')
+    parser.add_argument("-v", help="Increase the verbosity of the program",
+                        action="store_true")
     parser.add_argument("--version", action="version", version="1.0")
     args = parser.parse_args()
     return args
@@ -22,7 +24,7 @@ if __name__ == "__main__":
     args = parse_arguments()
     days = int(args.days) # string is not allowed
     try:
-        mag, place = earthquakes.get_earthquake(days, args.alertlevel)
+        mag, place = earthquakes.get_earthquake(days, args.alertlevel, args.v)
         print('The largest earthquake of last {} days had magnitude {} '
               'and was located at {}'.format(days, mag, place))
     except:
