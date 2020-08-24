@@ -3,11 +3,11 @@ import datetime
 import json
 
 base_url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?'
-query_url = 'starttime={}&format=geojson&limit=20000'
+query_url = 'starttime={}&format=geojson&limit=20000&'
 USGS_URL = base_url + query_url
 
 
-def get_earthquake(days_past):
+def get_earthquake(days_past, alertlevel):
     """Return the magnitude and the place of the earthquake with the highest
     magnitude given a starting time.
 
@@ -20,6 +20,8 @@ def get_earthquake(days_past):
     start_date = (datetime.datetime.now() +
                   datetime.timedelta(days=-days_past)).strftime("%Y-%m-%d")
     URL = USGS_URL.format(start_date)
+    if alertlevel:
+        URL = URL + '&alertlevel=' + alertlevel
     r = requests.get(URL)
     events = json.loads(requests.get(URL).text)
     magnitude = 0
