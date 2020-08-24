@@ -29,7 +29,8 @@ def get_alert_info(level, file_path=path_to_csv):
                 return row
         # if the level is not found in the csv return False
         return False
-            
+
+
 def get_available_levels(file_path=path_to_csv):
     """Return the choices available for the PAGER alert levels.
 
@@ -38,11 +39,11 @@ def get_available_levels(file_path=path_to_csv):
     :return: The PAGER alert levels available
     :rtype: list
     """
-    df = pd.read_csv(file_path, index_col = False)
+    df = pd.read_csv(file_path, index_col=False)
     choices = df['alert_and_color'].tolist()
     return choices
-    
-    
+
+
 def get_earthquake(days_past, alertlevel, verbosity):
     """Return the magnitude and the place of the earthquake with the highest
     magnitude given a starting time.

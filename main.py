@@ -4,7 +4,7 @@ import argparse
 
 def parse_arguments():
     """Parse the arguments with argparse.
-    
+
     :return: The arguments parsed by argparse
     :rtype: list
     """
