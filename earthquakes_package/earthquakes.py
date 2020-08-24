@@ -25,8 +25,8 @@ def get_earthquake(days_past, alertlevel, verbosity):
         URL = URL + '&alertlevel=' + alertlevel
     if verbosity:
         print('I am now starting to search for earthquakes with the following '
-              'parameters: \ndays_past = {}\nalertlevel = {}'.format(days_past,
-                                        alertlevel))
+              'parameters: \ndays_past = {}\nalertlevel = {}'
+              .format(days_past, alertlevel))
     r = requests.get(URL)
     events = json.loads(requests.get(URL).text)
     magnitude = 0
@@ -45,5 +45,4 @@ def get_earthquake(days_past, alertlevel, verbosity):
             if mag > magnitude:
                 magnitude = mag
                 place = event['properties']['place']
-                
         return magnitude, place

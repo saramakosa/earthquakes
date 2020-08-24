@@ -3,6 +3,7 @@ import argparse
 
 alert_levels = ['green', 'yellow', 'orange', 'red']
 
+
 def parse_arguments():
     parser = argparse.ArgumentParser(
             description="Get number of days from user",
@@ -11,7 +12,7 @@ def parse_arguments():
                         starting point for the research''')
     # if alertlevel is not explicit the parameter will not be added to the URL
     parser.add_argument("-alertlevel", choices=alert_levels, default=None,
-                        help='''PAGER fatality and economic loss 
+                        help='''PAGER fatality and economic loss
                         impact estimates''')
     parser.add_argument("-v", help="Increase the verbosity of the program",
                         action="store_true")
@@ -22,12 +23,11 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
-    days = int(args.days) # string is not allowed
+    days = int(args.days)  # string is not allowed
     try:
         mag, place = earthquakes.get_earthquake(days, args.alertlevel, args.v)
         print('The largest earthquake of last {} days had magnitude {} '
               'and was located at {}'.format(days, mag, place))
-    except:
+    except TypeError:
         print('No earthquake found with the specified parameters! Please '
               'choose a larger timespan or a lower alertlevel')
-        
