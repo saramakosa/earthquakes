@@ -8,9 +8,19 @@ import pandas as pd
 base_url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?'
 query_url = 'starttime={}&format=geojson&limit=20000&'
 USGS_URL = base_url + query_url
-
 path_to_csv = 'earthquakes_package/pager_levels.csv'
+
+
 def get_alert_info(level, file_path=path_to_csv):
+    """Get the description of an alert level given by the user
+
+    :param level: The PAGER alert level given by the user
+    :type file_path: string
+    :param file_path: The path to the csv file
+    :type file_path: string
+    :return: The official description elements of the PAGER alert level
+    :rtype: list
+    """
     with open(file_path) as csvfile:
         inforeader = csv.reader(csvfile, delimiter=',')
         next(inforeader)  # skip the header
@@ -21,6 +31,13 @@ def get_alert_info(level, file_path=path_to_csv):
         return False
             
 def get_available_levels(file_path=path_to_csv):
+    """Return the choices available for the PAGER alert levels.
+
+    :param file_path: The path to the csv file
+    :type file_path: string
+    :return: The PAGER alert levels available
+    :rtype: list
+    """
     df = pd.read_csv(file_path, index_col = False)
     choices = df['alert_and_color'].tolist()
     return choices

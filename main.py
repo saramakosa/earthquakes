@@ -2,8 +2,12 @@ from earthquakes_package import earthquakes
 import argparse
 
 
-
 def parse_arguments():
+    """Parse the arguments with argparse.
+    
+    :return: The arguments parsed by argparse
+    :rtype: list
+    """
     alert_levels = earthquakes.get_available_levels()
     parser = argparse.ArgumentParser(
             description="Get number of days from user",
