@@ -62,7 +62,7 @@ def add_user(u, p):
 
 def remove_user(u):
     """Remove a user from the database
-    
+
     :param u: username
     :type u: string
     """
@@ -70,11 +70,11 @@ def remove_user(u):
     global cursor
     cursor.execute("DELETE FROM users WHERE username = ?", (u,))
     conn.commit()
- 
+
 
 def get_users():
     """Get all the existing users
-    
+
     :return: list of existing users
     :rtype: list of existing users
     """
@@ -86,7 +86,7 @@ def get_users():
         return users
     return False
 
-    
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Add users / Remove users")
     parser.add_argument("-a", help="Add username '-u' with password '-p'",
@@ -109,7 +109,6 @@ if __name__ == "__main__":
     db_path = os.path.abspath(os.path.join(os.getcwd(), db_abs_path))
     open_and_create(db_path)
     args = parse_arguments()
-            
     # If the user tries to add and remove at the same time
     if args.a and args.r:
         print("Incompatible actions, please choose only one!")
