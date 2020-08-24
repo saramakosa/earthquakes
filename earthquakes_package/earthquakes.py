@@ -1,12 +1,31 @@
 import requests
 import datetime
 import json
+import csv
+import pandas as pd
+
 
 base_url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?'
 query_url = 'starttime={}&format=geojson&limit=20000&'
 USGS_URL = base_url + query_url
 
-
+path_to_csv = 'earthquakes_package/pager_levels.csv'
+def get_alert_info(level, file_path=path_to_csv):
+    with open(file_path) as csvfile:
+        inforeader = csv.reader(csvfile, delimiter=',')
+        next(inforeader)  # skip the header
+        for row in inforeader:
+            if row[0] == level:
+                return row
+        # if the level is not found in the csv return False
+        return False
+            
+def get_available_levels(file_path=path_to_csv):
+    df = pd.read_csv(file_path, index_col = False)
+    choices = df['alert_and_color'].tolist()
+    return choices
+    
+    
 def get_earthquake(days_past, alertlevel, verbosity):
     """Return the magnitude and the place of the earthquake with the highest
     magnitude given a starting time.
