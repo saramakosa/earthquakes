@@ -1,4 +1,5 @@
 import sqlite3
+import argparse
 import os
 
 conn = None
@@ -28,15 +29,31 @@ def create_users_table():
 
     global conn
     global cursor
-    # Create table, allow user names for max 20 chars and passwords 32 (hash)
+    # Create table with usernam, password and salt
     cursor.execute('''CREATE TABLE users
-                   (username CHARACTER(20) NOT NULL,
-                    password CHARACTER(32) NOT NULL,
-                    salt SMALLINT NOT NULL,
+                   (username CHARACTER(256) NOT NULL,
+                    password CHARACTER(256) NOT NULL,
+                    salt CHARACTER(256) NOT NULL,
                     PRIMARY KEY (username))''')
     
+    
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Add users / Remove users")
+    parser.add_argument("-a", help="Add username '-u' with password '-p'",
+                        action="store_true")
+    parser.add_argument("-r", help="Remove username '-u' with password '-p'",
+                        action="store_true")
+    parser.add_argument('-username', help="add a username name",
+                        required=True, default=None)
+    parser.add_argument('-password', help="the username password",
+                        required=False, default=None)
+    parser.add_argument("--version", action="version", version="1.0")
+    args = parser.parse_args()
+    return args
 
 if __name__ == "__main__":
     # get the correct path based on the folder where the script is invoked in
     db_path = os.path.abspath(os.path.join(os.getcwd(), db_abs_path))
     open_and_create(db_path)
+    args = parse_arguments()
+    print(args)
