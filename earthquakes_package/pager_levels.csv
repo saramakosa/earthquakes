@@ -1,0 +1,5 @@
+alert_and_color,estimated_fatalities,estimated_losses_usd
+red,1,000+,$1 billion+
+prange,100 - 999,$100 million - $1 billion
+yellow,1 - 99,$1 million - $100 million
+green,0,< $1 million
