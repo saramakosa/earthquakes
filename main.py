@@ -1,6 +1,8 @@
 from earthquakes_package import earthquakes
+from earthquakes_package.scripts import dbmanager 
 import argparse
 
+db_abs_path = 'earthquakes_package/scripts/database.db'
 
 def parse_arguments():
     """Parse the arguments with argparse.
@@ -20,6 +22,8 @@ def parse_arguments():
                         estimates''')
     parser.add_argument("-v", help="Increase the verbosity of the program",
                         action="store_true")
+    parser.add_argument('-username', help="username", required=True)
+    parser.add_argument('-password', help="password", required=True)
     parser.add_argument("--version", action="version", version="1.0")
     args = parser.parse_args()
     return args
@@ -27,6 +31,14 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
+    dbmanager.open_and_create(db_abs_path)
+    # If the user is not allowed to perform the action (i.e. does not exist)
+    if args.v:
+        print('Checking user credentials ...')
+    if not dbmanager.is_allowed(args.username, args.password):
+        print("Invalid credentials")
+        exit()    
+        
     days = int(args.days)  # string is not allowed
     if args.alertlevel and args.v:
         level_info = earthquakes.get_alert_info(args.alertlevel)

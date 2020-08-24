@@ -86,6 +86,29 @@ def get_users():
         return users
     return False
 
+def is_allowed(u, p):
+    """Check if a user is allowed tu perform the action
+
+    :param u: username
+    :param p: password
+    :return: True or False based on the user's permission
+    :rtype: Boolean
+    """
+
+    global conn
+    global cursor
+    rows = cursor.execute("SELECT * FROM users WHERE username=?", (u,))
+    conn.commit()
+    user = rows.fetchall()
+    if len(user) == 0:
+        return False
+    password = str(user[0][2]) + p
+    digest = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    if digest == user[0][1].lower():
+        return True
+    else:
+        return False
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Add users / Remove users")
