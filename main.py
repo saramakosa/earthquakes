@@ -21,6 +21,11 @@ def parse_arguments():
 if __name__ == "__main__":
     args = parse_arguments()
     days = int(args.days) # string is not allowed
-    mag, place = earthquakes.get_earthquake(days, args.alertlevel)
-    print('The largest earthquake of last {} days had magnitude {} '
-          'and was located at {}'.format(days, mag, place))
+    try:
+        mag, place = earthquakes.get_earthquake(days, args.alertlevel)
+        print('The largest earthquake of last {} days had magnitude {} '
+              'and was located at {}'.format(days, mag, place))
+    except:
+        print('No earthquake found with the specified parameters! Please '
+              'choose a larger timespan or a lower alertlevel')
+        

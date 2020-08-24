@@ -20,6 +20,7 @@ def get_earthquake(days_past, alertlevel):
     start_date = (datetime.datetime.now() +
                   datetime.timedelta(days=-days_past)).strftime("%Y-%m-%d")
     URL = USGS_URL.format(start_date)
+    # add the parameter alertlevel only if specified by the user
     if alertlevel:
         URL = URL + '&alertlevel=' + alertlevel
     r = requests.get(URL)
@@ -27,12 +28,16 @@ def get_earthquake(days_past, alertlevel):
     magnitude = 0
     place = ''
     # find the earthquake with the highest magnitude among the received results
-    for event in events['features']:
-        try:
-            mag = float(event['properties']['mag'])
-        except TypeError:
-            pass
-        if mag > magnitude:
-            magnitude = mag
-            place = event['properties']['place']
-    return magnitude, place
+    if len(events['features']) == 0:
+        return False
+    else:
+        for event in events['features']:
+            try:
+                mag = float(event['properties']['mag'])
+            except TypeError:
+                pass
+            if mag > magnitude:
+                magnitude = mag
+                place = event['properties']['place']
+                
+        return magnitude, place
