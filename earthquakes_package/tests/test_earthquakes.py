@@ -21,11 +21,16 @@ class TestCSVReader(unittest.TestCase):
         alert_info = e.get_alert_info('green', file_path=path_to_csv)
         self.assertIsInstance(alert_info, list)
         
-    def test_empty_file(self):
-        """Test for empty file."""
+    def test_no_alert(self):
+        """Test for incorrect color level."""
         alert_info = e.get_alert_info('random_color_that_nobody_knows',
                                       file_path=path_to_csv)
         self.assertFalse(alert_info)
+        
+    def test_empty_file(self):
+        """Test for empty file."""
+        data = e.get_alert_info('/tmp/temporary_file.csv')
+        self.assertFalse(data)
 
     def tearDown(self):
         os.remove(self.temporary_file)
