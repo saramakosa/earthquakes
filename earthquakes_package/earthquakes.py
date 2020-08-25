@@ -21,13 +21,16 @@ def get_alert_info(level, file_path=path_to_csv):
     :return: The official description elements of the PAGER alert level
     :rtype: list
     """
-    with open(file_path) as csvfile:
-        inforeader = csv.reader(csvfile, delimiter=',')
-        next(inforeader)  # skip the header
-        for row in inforeader:
-            if row[0] == level:
-                return row
-        # if the level is not found in the csv return False
+    try:
+        with open(file_path) as csvfile:
+            inforeader = csv.reader(csvfile, delimiter=',')
+            next(inforeader)  # skip the header
+            for row in inforeader:
+                if row[0] == level:
+                    return row
+            # if the level is not found in the csv return False
+            return False
+    except FileNotFoundError:
         return False
 
 
