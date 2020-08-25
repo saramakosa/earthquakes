@@ -16,6 +16,10 @@ class TestCSVReader(unittest.TestCase):
         alert_info = e.get_alert_info('green', file_path="/tmp/random_name.csv")
         self.assertFalse(alert_info)
 
+    def test_alert_info(self):
+        """Test that info about a correct alert level is retrieved."""
+        alert_info = e.get_alert_info('green', file_path=path_to_csv)
+        self.assertIsInstance(alert_info, list)
         
     def test_empty_file(self):
         """Test for empty file."""
