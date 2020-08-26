@@ -10,7 +10,7 @@ db_abs_path = 'earthquakes_package/scripts/database.db'
 
 
 def open_and_create(db_path):
-    """Connect to sqlite database given the path
+    """Connect to sqlite database given the path to the .db file
 
     :param db_path: The path to the database file
     :type db_path: string
@@ -32,7 +32,7 @@ def create_users_table():
 
     global conn
     global cursor
-    # Create table with usernam, password and salt
+    # Create table with username, password and salt
     cursor.execute('''CREATE TABLE users
                    (username CHARACTER(256) NOT NULL,
                     password CHARACTER(256) NOT NULL,
@@ -41,7 +41,7 @@ def create_users_table():
 
 
 def add_user(u, p):
-    """Add a new user to the database
+    """Add a new user to the database given username and password
 
     :param u: username
     :type u: string
@@ -51,7 +51,8 @@ def add_user(u, p):
 
     global conn
     global cursor
-    salt = random.randint(1, 10000)
+    salt = random.randint(1, 1000000)
+    # add the salt to the password before computing the hash
     p = str(salt) + p
     digest = hashlib.sha256(p.encode('utf-8')).hexdigest()
     # if the user already exists, replace its password and salt
@@ -61,7 +62,7 @@ def add_user(u, p):
 
 
 def remove_user(u):
-    """Remove a user from the database
+    """Remove a user from the database given his username
 
     :param u: username
     :type u: string
@@ -73,7 +74,7 @@ def remove_user(u):
 
 
 def get_users():
-    """Get all the existing users
+    """Get all the existing users, this is useful for the --show parameter
 
     :return: list of existing users
     :rtype: list of existing users
@@ -87,11 +88,11 @@ def get_users():
     return False
 
 
-def is_allowed(u, p):
+def is_allowed(u, given_password):
     """Check if a user is allowed tu perform the action
 
     :param u: username
-    :param p: password
+    :param given_password: password given by the user
     :return: True or False based on the user's permission
     :rtype: Boolean
     """
@@ -101,11 +102,17 @@ def is_allowed(u, p):
     rows = cursor.execute("SELECT * FROM users WHERE username=?", (u,))
     conn.commit()
     user = rows.fetchall()
+    # return False if no user is found with that username
     if len(user) == 0:
         return False
-    password = str(user[0][2]) + p
-    digest = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    if digest == user[0][1].lower():
+    # check if the stored password is correct
+    # (i.e if the stored password == digest(salt + password given by the user))
+    stored_salt = str(user[0][2])
+    given_password = stored_salt + given_password
+    stored_password = user[0][1]
+    digest = hashlib.sha256(given_password.encode('utf-8')).hexdigest()
+    # return False if the user is found but the password is incorrect
+    if digest == stored_password.lower():
         return True
     else:
         return False
@@ -133,18 +140,17 @@ if __name__ == "__main__":
     db_path = os.path.abspath(os.path.join(os.getcwd(), db_abs_path))
     open_and_create(db_path)
     args = parse_arguments()
-    # If the user tries to add and remove at the same time
-    if args.a and args.r:
-        print("Incompatible actions, please choose only one!")
-        exit()
     # If the user wants to add another user
     if args.a:
+        # If the user tries to add and remove at the same time
+        if args.r:
+            print("Incompatible actions, please choose only one!")
+            exit()
         # if the password is not given
         if not args.password:
             print("Please choose a password as well!")
             exit()
-        else:
-            add_user(args.username, args.password)
+        add_user(args.username, args.password)
     # If the user wants to remove another user
     if args.r:
         remove_user(args.username)
@@ -152,8 +158,8 @@ if __name__ == "__main__":
     if args.show:
         print('Retrieving all existing users...')
         users = get_users()
-        if users:
+        if not users:
+            print("No users found!")
+        else:
             for i in range(len(users)):
                 print('username: ' + users[i][0], '\tpassword: ' + users[i][1])
-        else:
-            print("No users found")

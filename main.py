@@ -11,18 +11,20 @@ def parse_arguments():
     :return: The arguments parsed by argparse
     :rtype: list
     """
+    # get the PAGER alert level codes (from the CSV)
     alert_levels = earthquakes.get_available_levels()
     parser = argparse.ArgumentParser(
-            description="Get number of days from user",
+            description="Get number of days in the past to use as starttime",
             epilog="Using FDSN	Web	Service	Specifications")
     parser.add_argument("days", help='''The number of days in the past as a
-                        starting point for the research''')
-    # if alertlevel is not explicit the parameter will not be added to the URL
+                        starting point for the API call''')
+    # if alertlevel is not made explicit it will not be added to the URL
     parser.add_argument("-alertlevel", default=None, choices=alert_levels,
                         help='''PAGER fatality and economic loss impact
-                        estimates''')
+                        estimates (see CSV file)''')
     parser.add_argument("-v", help="Increase the verbosity of the program",
                         action="store_true")
+    # username and password required for any action
     parser.add_argument('-username', help="username", required=True)
     parser.add_argument('-password', help="password", required=True)
     parser.add_argument("--version", action="version", version="1.0")
@@ -32,28 +34,29 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
+    # See first if the user is allowed to perform the action
     dbmanager.open_and_create(db_abs_path)
-    # If the user is not allowed to perform the action (i.e. does not exist)
     if args.v:
         print('Checking user credentials ...')
     if not dbmanager.is_allowed(args.username, args.password):
-        print("Invalid credentials")
+        print("Invalid credentials, please check username and password")
         exit()
-
-    days = int(args.days)  # string is not allowed
+        
+    # IF THE USER IS ALLOWED ...
+    days = int(args.days)
+    # If the alert level is made explicit by the user verbosity is set to true
+    # describe the alert level to the user  
     if args.alertlevel and args.v:
         level_info = earthquakes.get_alert_info(args.alertlevel)
         if level_info:
             print('The {} level is described as having {} estimated '
                   'fatalities and {} estimated losses in USD'
                   .format(level_info[0], level_info[1], level_info[2]))
-        else:
-            print('Alert level not found!')
-            exit()
-    try:
-        mag, place = earthquakes.get_earthquake(days, args.alertlevel, args.v)
+    # search for the earthquakes
+    mag, place = earthquakes.get_earthquake(days, args.alertlevel, args.v)
+    if mag and place:
         print('The largest earthquake of last {} days had magnitude {} '
               'and was located at {}'.format(days, mag, place))
-    except TypeError:
+    else:
         print('No earthquake found with the specified parameters! Please '
               'choose a larger timespan or a lower alertlevel')

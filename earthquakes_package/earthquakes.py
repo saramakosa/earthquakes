@@ -18,7 +18,7 @@ def get_alert_info(level, file_path=path_to_csv):
     :type file_path: string
     :param file_path: The path to the csv file
     :type file_path: string
-    :return: The official description elements of the PAGER alert level
+    :return: The official description elements of the chosen alert level
     :rtype: list
     """
     try:
@@ -30,6 +30,7 @@ def get_alert_info(level, file_path=path_to_csv):
                     return row
             # if the level is not found in the csv return False
             return False
+    # if the file is not found (maybe incorrect name) return False
     except FileNotFoundError:
         return False
 
@@ -75,14 +76,14 @@ def get_earthquake(days_past, alertlevel, verbosity):
     if verbosity:
         print('Search completed')
     if len(events['features']) == 0:
-        return False
-    else:
-        for event in events['features']:
-            try:
-                mag = float(event['properties']['mag'])
-            except TypeError:
-                pass
-            if mag > magnitude:
-                magnitude = mag
-                place = event['properties']['place']
-        return magnitude, place
+        return False, False
+    # iterate all the events and find the one with the largest magnitude
+    for event in events['features']:
+        try:
+            mag = float(event['properties']['mag'])
+        except TypeError:
+            pass
+        if mag > magnitude:
+            magnitude = mag
+            place = event['properties']['place']
+    return magnitude, place
