@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>Python: module earthquakes_package.earthquakes</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body bgcolor="#f0f0f8">
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="2"
+      border="0"
+      summary="heading"
+    >
+      <tr bgcolor="#7799ee">
+        <td valign="bottom">
+          &nbsp;<br />
+          <font color="#ffffff" face="helvetica, arial"
+            >&nbsp;<br /><big
+              ><big
+                ><strong
+                  ><a href="earthquakes_package.html"
+                    ><font color="#ffffff">earthquakes_package</font></a
+                  >.earthquakes</strong
+                ></big
+              ></big
+            ></font
+          >
+        </td>
+        <td align="right" valign="bottom">
+          <font color="#ffffff" face="helvetica, arial"
+            ><a href=".">index</a><br /><a
+              href="file:/Users/saramakosa/Desktop/earthquakes/earthquakes_package/earthquakes.py"
+              >/Users/saramakosa/Desktop/earthquakes/earthquakes_package/earthquakes.py</a
+            ></font
+          >
+        </td>
+      </tr>
+    </table>
+    <p></p>
+    <p></p>
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="2"
+      border="0"
+      summary="section"
+    >
+      <tr bgcolor="#aa55cc">
+        <td colspan="3" valign="bottom">
+          &nbsp;<br />
+          <font color="#ffffff" face="helvetica, arial"
+            ><big><strong>Modules</strong></big></font
+          >
+        </td>
+      </tr>
+
+      <tr>
+        <td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+        <td>&nbsp;</td>
+        <td width="100%">
+          <table width="100%" summary="list">
+            <tr>
+              <td width="25%" valign="top">
+                <a href="csv.html">csv</a><br />
+                <a href="datetime.html">datetime</a><br />
+              </td>
+              <td width="25%" valign="top">
+                <a href="json.html">json</a><br />
+                <a href="pandas.html">pandas</a><br />
+              </td>
+              <td width="25%" valign="top">
+                <a href="requests.html">requests</a><br />
+              </td>
+              <td width="25%" valign="top"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <p></p>
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="2"
+      border="0"
+      summary="section"
+    >
+      <tr bgcolor="#eeaa77">
+        <td colspan="3" valign="bottom">
+          &nbsp;<br />
+          <font color="#ffffff" face="helvetica, arial"
+            ><big><strong>Functions</strong></big></font
+          >
+        </td>
+      </tr>
+
+      <tr>
+        <td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+        <td>&nbsp;</td>
+        <td width="100%">
+          <dl>
+            <dt>
+              <a name="-get_alert_info"><strong>get_alert_info</strong></a
+              >(level, file_path='earthquakes_package/pager_levels.csv')
+            </dt>
+            <dd>
+              <tt
+                >Get&nbsp;the&nbsp;description&nbsp;of&nbsp;an&nbsp;alert&nbsp;level&nbsp;given&nbsp;by&nbsp;the&nbsp;user<br />
+                &nbsp;<br />
+                :param&nbsp;level:&nbsp;The&nbsp;PAGER&nbsp;alert&nbsp;level&nbsp;given&nbsp;by&nbsp;the&nbsp;user<br />
+                :type&nbsp;file_path:&nbsp;string<br />
+                :param&nbsp;file_path:&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;csv&nbsp;file<br />
+                :type&nbsp;file_path:&nbsp;string<br />
+                :return:&nbsp;The&nbsp;official&nbsp;description&nbsp;elements&nbsp;of&nbsp;the&nbsp;chosen&nbsp;alert&nbsp;level<br />
+                :rtype:&nbsp;list</tt
+              >
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <a name="-get_available_levels"
+                ><strong>get_available_levels</strong></a
+              >(file_path='earthquakes_package/pager_levels.csv')
+            </dt>
+            <dd>
+              <tt
+                >Return&nbsp;the&nbsp;choices&nbsp;available&nbsp;for&nbsp;the&nbsp;PAGER&nbsp;alert&nbsp;levels.<br />
+                &nbsp;<br />
+                :param&nbsp;file_path:&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;csv&nbsp;file<br />
+                :type&nbsp;file_path:&nbsp;string<br />
+                :return:&nbsp;The&nbsp;PAGER&nbsp;alert&nbsp;levels&nbsp;available<br />
+                :rtype:&nbsp;list</tt
+              >
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <a name="-get_earthquake"><strong>get_earthquake</strong></a
+              >(days_past, alertlevel, verbosity)
+            </dt>
+            <dd>
+              <tt
+                >Return&nbsp;the&nbsp;magnitude&nbsp;and&nbsp;the&nbsp;place&nbsp;of&nbsp;the&nbsp;earthquake&nbsp;with&nbsp;the&nbsp;highest<br />
+                magnitude&nbsp;given&nbsp;a&nbsp;starting&nbsp;time.<br />
+                &nbsp;<br />
+                :param&nbsp;days_past:&nbsp;Number&nbsp;of&nbsp;days&nbsp;in&nbsp;the&nbsp;past&nbsp;(used&nbsp;as&nbsp;starting&nbsp;point)<br />
+                :type&nbsp;days_past:&nbsp;int<br />
+                :return:&nbsp;The&nbsp;magnitude&nbsp;and&nbsp;the&nbsp;place&nbsp;of&nbsp;the&nbsp;strongest&nbsp;earthquake&nbsp;found<br />
+                :rtype:&nbsp;float,&nbsp;string</tt
+              >
+            </dd>
+          </dl>
+        </td>
+      </tr>
+    </table>
+    <p></p>
+    <table
+      width="100%"
+      cellspacing="0"
+      cellpadding="2"
+      border="0"
+      summary="section"
+    >
+      <tr bgcolor="#55aa55">
+        <td colspan="3" valign="bottom">
+          &nbsp;<br />
+          <font color="#ffffff" face="helvetica, arial"
+            ><big><strong>Data</strong></big></font
+          >
+        </td>
+      </tr>
+
+      <tr>
+        <td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+        <td>&nbsp;</td>
+        <td width="100%">
+          <strong>USGS_URL</strong> =
+          'https://earthquake.usgs.gov/fdsnws/event/1/query?starttime={}&amp;format=geojson&amp;limit=20000&amp;'<br />
+          <strong>base_url</strong> =
+          'https://earthquake.usgs.gov/fdsnws/event/1/query?'<br />
+          <strong>path_to_csv</strong> =
+          'earthquakes_package/pager_levels.csv'<br />
+          <strong>query_url</strong> =
+          'starttime={}&amp;format=geojson&amp;limit=20000&amp;'
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
