@@ -1,8 +1,8 @@
 """This module executes a call to the USGS service and returns the largest
  earthquake in the last [last_days] where last_days is chosen by the user.
- The module parse_arguments provides more information about the arguments that 
+The module parse_arguments provides more information about the arguments that
  can be used."""
- 
+
 from earthquakes_package import earthquakes
 from earthquakes_package.scripts import dbmanager
 import argparse
@@ -46,11 +46,11 @@ if __name__ == "__main__":
     if not dbmanager.is_allowed(args.username, args.password):
         print("Invalid credentials, please check username and password")
         exit()
-        
+
     # IF THE USER IS ALLOWED ...
     days = int(args.days)
     # If the alert level is made explicit by the user verbosity is set to true
-    # describe the alert level to the user  
+    # describe the alert level to the user
     if args.alertlevel and args.v:
         level_info = earthquakes.get_alert_info(args.alertlevel)
         if level_info:
