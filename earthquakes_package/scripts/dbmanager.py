@@ -1,3 +1,8 @@
+"""This module helps a user to manage the database. Only one table ("users") is
+available and new users can me added or the existing ones can be removed. See 
+the argparse options for more information."""
+
+
 import sqlite3
 import argparse
 import os
@@ -119,6 +124,12 @@ def is_allowed(u, given_password):
 
 
 def parse_arguments():
+    """Parse the arguments given by the user.
+    
+    :return: Arguments parsed from the console 
+    :rtype: list
+    """
+    
     parser = argparse.ArgumentParser(description="Add users / Remove users")
     parser.add_argument("-a", help="Add username '-u' with password '-p'",
                         action="store_true")

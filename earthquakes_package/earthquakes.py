@@ -1,3 +1,8 @@
+"""This module makes the actual call to the USGS service and it is used by the
+main script. The functions get_alert_info and get_available levels only read
+local files. The get_earthquake function makes a call to a third party service
+and an internet connection is required."""
+
 import requests
 import datetime
 import json

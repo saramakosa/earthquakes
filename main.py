@@ -1,3 +1,8 @@
+"""This module executes a call to the USGS service and returns the largest
+ earthquake in the last [last_days] where last_days is chosen by the user.
+ The module parse_arguments provides more information about the arguments that 
+ can be used."""
+ 
 from earthquakes_package import earthquakes
 from earthquakes_package.scripts import dbmanager
 import argparse
